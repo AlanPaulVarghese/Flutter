@@ -38,4 +38,17 @@ class Products with ChangeNotifier {
   ];
 
   List<Product> get data => [..._data];
+
+  void toggleFav(String id) {
+    Product p = _data.firstWhere((element) => element.id == id);
+    p.isFav = !p.isFav;
+    notifyListeners();
+  }
+
+  List<Product> filteredFavData(bool val) {
+    if (val) {
+      return _data.where((element) => element.isFav == true).toList();
+    }
+    return data;
+  }
 }

@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (ctx) => Products(),
       child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Dash(),
       ),
     );
