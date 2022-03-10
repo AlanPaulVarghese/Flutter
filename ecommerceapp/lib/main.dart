@@ -1,3 +1,4 @@
+import 'package:ecommerceapp/models/order.dart';
 import 'package:ecommerceapp/models/products.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (ctx) => Products(),
         ),
-        ChangeNotifierProvider(create: (ctx) => Carts())
+        ChangeNotifierProvider(create: (ctx) => Carts()),
+        ChangeNotifierProvider(create: (ctx) => Orders()),
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,

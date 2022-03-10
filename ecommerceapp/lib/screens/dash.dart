@@ -1,3 +1,4 @@
+import 'package:ecommerceapp/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import '../widgets/product_overview.dart';
 import '../widgets/cart_badge.dart';
@@ -15,6 +16,9 @@ class _DashState extends State<Dash> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(
+          color: Colors.black,
+        ),
         elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.transparent,
@@ -60,6 +64,7 @@ class _DashState extends State<Dash> {
           )
         ],
       ),
+      drawer: const DrawerBuilder(),
       body: ProductOverView(favStatus: favStaus),
     );
   }
