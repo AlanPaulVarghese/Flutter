@@ -47,7 +47,7 @@ class _DashState extends State<Dash> {
                   ),
                 ];
               }),
-          const CartBadge(value: 0),
+          const CartBadge(),
           const SizedBox(
             width: 10,
           )

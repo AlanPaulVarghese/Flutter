@@ -1,8 +1,9 @@
+import 'package:ecommerceapp/models/cart.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CartBadge extends StatelessWidget {
-  final int value;
-  const CartBadge({Key? key, required this.value}) : super(key: key);
+  const CartBadge({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +25,14 @@ class CartBadge extends StatelessWidget {
               minWidth: 16,
               minHeight: 16,
             ),
-            child: Text(
-              value.toString(),
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 10,
-              ),
-            ),
+            child: Consumer<Carts>(
+                builder: (ctx, p, _) => Text(
+                      p.len.toString(),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 10,
+                      ),
+                    )),
           ),
         )
       ],

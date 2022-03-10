@@ -1,3 +1,4 @@
+import 'package:ecommerceapp/models/cart.dart';
 import 'package:ecommerceapp/models/product.dart';
 import 'package:ecommerceapp/models/products.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,15 @@ class ProductOverViewBuilder extends StatelessWidget {
               child: Text(product.title, overflow: TextOverflow.ellipsis)),
           backgroundColor: Colors.black54,
           leading: IconButton(
-              onPressed: () {}, icon: const Icon(Icons.shopping_cart)),
+              onPressed: () {
+                Provider.of<Carts>(context, listen: false).addCartItem(
+                  id: DateTime.now().toString(),
+                  title: product.title,
+                  prodId: product.id,
+                  price: product.price,
+                );
+              },
+              icon: const Icon(Icons.shopping_cart)),
           trailing: Consumer<Products>(
             builder: (ctx, p, _) => IconButton(
                 onPressed: () {
