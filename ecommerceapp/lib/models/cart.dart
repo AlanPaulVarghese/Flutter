@@ -54,4 +54,9 @@ class Carts with ChangeNotifier {
     }
     return temp;
   }
+
+  void dissmiss(String id) {
+    items.removeWhere((element) => element.id == id);
+    notifyListeners();
+  }
 }
