@@ -25,7 +25,6 @@ class ProductOverViewBuilder extends StatelessWidget {
               onPressed: () {
                 Provider.of<Carts>(context, listen: false).addCartItem(
                   id: DateTime.now().toString(),
-                  title: product.title,
                   prodId: product.id,
                   price: product.price,
                 );

@@ -11,6 +11,9 @@ class CartBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: const BorderSide(color: Colors.white)),
       child: ListTile(
         leading: CircleAvatar(
           backgroundImage: NetworkImage(product.url),

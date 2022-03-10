@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 
 class Cart {
   final String id;
-  final String title;
   final String prodId;
   double total;
   int qty;
@@ -10,7 +9,6 @@ class Cart {
       {required this.prodId,
       required this.id,
       required this.qty,
-      required this.title,
       required this.total});
 }
 
@@ -19,7 +17,6 @@ class Carts with ChangeNotifier {
 
   void addCartItem({
     required String id,
-    required String title,
     required String prodId,
     required double price,
   }) {
@@ -33,8 +30,7 @@ class Carts with ChangeNotifier {
       }
     }
     if (flag) {
-      items.add(
-          Cart(prodId: prodId, id: id, qty: 1, title: title, total: price));
+      items.add(Cart(prodId: prodId, id: id, qty: 1, total: price));
     }
     notifyListeners();
   }
@@ -45,6 +41,16 @@ class Carts with ChangeNotifier {
     int temp = 0;
     for (int i = 0; i < items.length; i++) {
       temp += items[i].qty;
+    }
+    return temp;
+  }
+
+  double get total => calTotal();
+
+  double calTotal() {
+    double temp = 0.0;
+    for (var element in items) {
+      temp += element.total;
     }
     return temp;
   }
