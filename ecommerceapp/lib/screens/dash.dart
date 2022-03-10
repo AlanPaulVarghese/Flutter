@@ -17,11 +17,18 @@ class _DashState extends State<Dash> {
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        title: const Text("My Shop"),
+        backgroundColor: Colors.transparent,
+        title: const Text(
+          "My Shop",
+          style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w900),
+        ),
         actions: [
           PopupMenuButton(
               color: Colors.lightBlue,
-              icon: const Icon(Icons.more_vert),
+              icon: const Icon(
+                Icons.more_vert,
+                color: Colors.blue,
+              ),
               onSelected: (bool val) {
                 setState(() {
                   favStaus = val;

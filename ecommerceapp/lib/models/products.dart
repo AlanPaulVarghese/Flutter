@@ -51,4 +51,21 @@ class Products with ChangeNotifier {
     }
     return data;
   }
+
+  Product getProduct(String id) {
+    /* for (int i = 0; i < _data.length; i++) {
+      if (_data[i].id == id) {
+        return _data[i];
+      }
+    }
+    return Product(
+      des: '',
+      id: '',
+      isFav: false,
+      price: 0.0,
+      title: '',
+      url: ''
+    );*/
+    return _data.firstWhere((element) => element.id == id);
+  }
 }
