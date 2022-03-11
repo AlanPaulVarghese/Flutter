@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:ecommerceapp/models/products.dart';
 import 'package:flutter/material.dart';
 import '../models/order.dart';
 
@@ -15,39 +16,50 @@ class _OrderBuilerState extends State<OrderBuiler> {
   bool expanded = false;
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(children: [
-        ListTile(
-          title: Text(widget.order.total.toStringAsFixed(2)),
-          subtitle: Text(
-              "${widget.order.date.day}/${widget.order.date.month}/${widget.order.date.year}"),
-          trailing: IconButton(
-              onPressed: () {
-                setState(() {
-                  expanded = !expanded;
-                });
-              },
-              icon: const Icon(Icons.expand_more)),
-        ),
-        if (expanded)
-          SizedBox(
-            height: 100,
-            child: ListView.builder(
-              itemBuilder: (ctx, i) {
-                print(
-                  min(widget.order.items.length * 50.0, 100.0),
-                );
-
-                return ListTile(
-                  leading: CircleAvatar(
-                    child: Text("${i + 1}"),
-                  ),
-                );
-              },
-              itemCount: widget.order.items.length,
-            ),
-          )
-      ]),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        shape: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(40),
+            borderSide:const BorderSide(color: Colors.white)),
+        child: Column(children: [
+          ListTile(
+            title: Text(widget.order.total.toStringAsFixed(2)),
+            subtitle: Text(
+                "${widget.order.date.day}/${widget.order.date.month}/${widget.order.date.year}"),
+            trailing: IconButton(
+                onPressed: () {
+                  setState(() {
+                    expanded = !expanded;
+                  });
+                },
+                icon: expanded
+                    ? const Icon(Icons.expand_less)
+                    : const Icon(Icons.expand_more)),
+          ),
+          if (expanded)
+            SizedBox(
+              height: min(widget.order.items.length * 70.0, 200.0),
+              child: ListView.builder(
+                itemBuilder: (ctx, i) {
+                  return ListTile(
+                    leading: Text(
+                      "${i + 1}",
+                      style: const TextStyle(color: Colors.blue),
+                    ),
+                    title: Text(Products()
+                        .getProduct(widget.order.items[i].prodId)
+                        .title),
+                    subtitle:
+                        Text(widget.order.items[i].total.toStringAsFixed(2)),
+                    trailing: Text("${widget.order.items[i].qty}"),
+                  );
+                },
+                itemCount: widget.order.items.length,
+              ),
+            )
+        ]),
+      ),
     );
   }
 }
