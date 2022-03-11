@@ -16,6 +16,7 @@ class DrawerBuilder extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
+              Navigator.of(context).pop();
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (ctx) => const Dash()));
             },
@@ -45,6 +46,8 @@ class DrawerBuilder extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
+              Navigator.of(context).pop();
+
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (ctx) => const OrderScreen()));
             },

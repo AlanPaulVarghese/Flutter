@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:ecommerceapp/models/order.dart';
 import 'package:ecommerceapp/models/products.dart';
 import 'package:ecommerceapp/widgets/cart_builder.dart';
@@ -62,7 +60,7 @@ class CartScreen extends StatelessWidget {
                         style: TextStyle(color: Colors.white, fontSize: 30),
                       ),
                       Text(
-                        p.total.toString(),
+                        p.total.toStringAsFixed(2),
                         style:
                             const TextStyle(color: Colors.white, fontSize: 30),
                       )
@@ -77,8 +75,10 @@ class CartScreen extends StatelessWidget {
               Provider.of<Orders>(context, listen: false).addOrder(
                   id: DateTime.now().toString(),
                   dateTime: DateTime.now(),
-                  items: p.items);
+                  items: List.from(p.items),
+                  total: p.total);
               Provider.of<Carts>(context, listen: false).clear();
+              Navigator.of(context).pop();
             },
             child: Align(
               alignment: Alignment.bottomCenter,

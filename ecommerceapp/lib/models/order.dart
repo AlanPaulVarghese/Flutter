@@ -5,7 +5,12 @@ class Order {
   final String id;
   final DateTime date;
   final List<Cart> items;
-  Order({required this.date, required this.id, required this.items});
+  final double total;
+  Order(
+      {required this.date,
+      required this.id,
+      required this.items,
+      required this.total});
 }
 
 class Orders with ChangeNotifier {
@@ -14,8 +19,9 @@ class Orders with ChangeNotifier {
   void addOrder(
       {required String id,
       required DateTime dateTime,
-      required List<Cart> items}) {
-    orders.add(Order(date: dateTime, id: id, items: items));
+      required List<Cart> items,
+      required double total}) {
+    orders.add(Order(date: dateTime, id: id, items: items, total: total));
     notifyListeners();
   }
 }
