@@ -32,8 +32,28 @@ class ManageProductBuilder extends StatelessWidget {
                   )),
               IconButton(
                   onPressed: () {
-                    Provider.of<Products>(context, listen: false)
-                        .remove(product);
+                    showDialog(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                              title: const Text("Remove This Product"),
+                              content: const Text(
+                                  "Are You Sure You Want To Delete This Product"),
+                              actions: [
+                                ElevatedButton(
+                                    onPressed: () {
+                                      Provider.of<Products>(context,
+                                              listen: false)
+                                          .remove(product);
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text("Yes")),
+                                ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text("No")),
+                              ],
+                            ));
                   },
                   icon: const Icon(
                     Icons.delete,
