@@ -1,4 +1,5 @@
 import 'package:ecommerceapp/screens/dash.dart';
+import 'package:ecommerceapp/screens/manage_products.dart';
 import 'package:ecommerceapp/screens/order_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -64,6 +65,37 @@ class DrawerBuilder extends StatelessWidget {
                 ),
                 Text(
                   'My Orders',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 25),
+                )
+              ]),
+            ),
+          ),
+          const Divider(
+            color: Colors.white,
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.of(context).pop();
+
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (ctx) => const ManageProducts()));
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(children: const [
+                Icon(
+                  Icons.manage_accounts,
+                  color: Colors.white,
+                  size: 40,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  'Manage Products',
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w900,

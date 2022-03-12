@@ -52,6 +52,11 @@ class Products with ChangeNotifier {
     return data;
   }
 
+  void addProduct(Product product) {
+    _data.add(product);
+    notifyListeners();
+  }
+
   Product getProduct(String id) {
     /* for (int i = 0; i < _data.length; i++) {
       if (_data[i].id == id) {
