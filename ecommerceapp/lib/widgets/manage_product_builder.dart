@@ -1,6 +1,8 @@
 import 'package:ecommerceapp/models/product.dart';
+import 'package:ecommerceapp/models/products.dart';
+import 'package:ecommerceapp/screens/edit_product_form.dart';
 import 'package:flutter/material.dart';
-import '../models/products.dart';
+import 'package:provider/provider.dart';
 
 class ManageProductBuilder extends StatelessWidget {
   final Product product;
@@ -20,13 +22,19 @@ class ManageProductBuilder extends StatelessWidget {
           child: Row(
             children: [
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (ctx) => EditProductForm(product: product)));
+                  },
                   icon: const Icon(
                     Icons.edit,
                     color: Colors.blue,
                   )),
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Provider.of<Products>(context, listen: false)
+                        .remove(product);
+                  },
                   icon: const Icon(
                     Icons.delete,
                     color: Colors.red,

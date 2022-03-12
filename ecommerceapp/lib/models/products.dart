@@ -57,6 +57,18 @@ class Products with ChangeNotifier {
     notifyListeners();
   }
 
+  void editProduct(Product product) {
+    final temp = _data.firstWhere((element) => element.id == product.id);
+    _data.remove(temp);
+    _data.add(product);
+    notifyListeners();
+  }
+
+  void remove(Product product) {
+    _data.remove(product);
+    notifyListeners();
+  }
+
   Product getProduct(String id) {
     /* for (int i = 0; i < _data.length; i++) {
       if (_data[i].id == id) {
