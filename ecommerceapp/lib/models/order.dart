@@ -17,7 +17,6 @@ class Order {
 
 class Orders with ChangeNotifier {
   final List<Order> orders = [];
-
   Future<void> addOrder(
       {required String id,
       required DateTime dateTime,
@@ -28,7 +27,7 @@ class Orders with ChangeNotifier {
     final res = await http.post(url,
         body: json.encode({
           'date': dateTime.toIso8601String(),
-          'total':total,
+          'total': total,
           'items': items
               .map((e) =>
                   {'id': e.id, 'pid': e.prodId, 'qty': e.qty, 'total': e.total})
