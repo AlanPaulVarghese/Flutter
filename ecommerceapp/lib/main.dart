@@ -27,3 +27,35 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+/*
+
+class DataLoader extends StatelessWidget {
+  const DataLoader({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: Products().loadData(),
+      builder: (ctx, snap) {
+        if (snap.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+        if (snap.connectionState == ConnectionState.done) {
+          print(snap.data);
+          return const Dash();
+        }
+        return const Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
+      },
+    );
+  }
+}
+*/

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
-
+import 'package:http/http.dart' as http;
 import './product.dart';
+import 'dart:convert';
 
 class Products with ChangeNotifier {
   final List<Product> _data = [
@@ -52,8 +53,27 @@ class Products with ChangeNotifier {
     return data;
   }
 
-  void addProduct(Product product) {
-    _data.add(product);
+  Future<void> addProduct(Product product) async {
+    final url = Uri.parse(
+        "https://ecommerceapp1122-default-rtdb.firebaseio.com/products.json");
+    final res = await http.post(url,
+        body: json.encode({
+          'title': product.title,
+          'price': product.price,
+          'des': product.des,
+          'isFav': product.isFav,
+          'imgUrl': product.url
+        }));
+    var id = json.decode(res.body)['name'];
+    Product newProduct = Product(
+        des: product.des,
+        id: id,
+        isFav: product.isFav,
+        price: product.price,
+        title: product.title,
+        url: product.url);
+
+    _data.add(newProduct);
     notifyListeners();
   }
 
@@ -69,20 +89,25 @@ class Products with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> loadData() async {
+    final url = Uri.parse(
+        "https://ecommerceapp1122-default-rtdb.firebaseio.com/products.json");
+    final res = await http.get(url);
+    final conRes = json.decode(res.body);
+    final convertedData = Map<String, dynamic>.from(conRes);
+    convertedData.forEach((key, value) {
+      _data.add(Product(
+          des: value['des'],
+          id: key,
+          isFav: value['isFav'],
+          price: value['price'],
+          title: value['title'],
+          url: value['imgUrl']));
+    });
+    notifyListeners();
+  }
+
   Product getProduct(String id) {
-    /* for (int i = 0; i < _data.length; i++) {
-      if (_data[i].id == id) {
-        return _data[i];
-      }
-    }
-    return Product(
-      des: '',
-      id: '',
-      isFav: false,
-      price: 0.0,
-      title: '',
-      url: ''
-    );*/
     return _data.firstWhere((element) => element.id == id);
   }
 }
