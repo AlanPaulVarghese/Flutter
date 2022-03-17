@@ -23,12 +23,16 @@ class ManageProducts extends StatelessWidget {
           style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w900),
         ),
       ),
-      body: ListView.builder(
-        itemBuilder: (ctx, i) {
-          return ManageProductBuilder(product: p.data[i]);
-        },
-        itemCount: p.data.length,
-      ),
+      body: p.data.isEmpty
+          ? const Center(
+              child: Text("No Products To Display"),
+            )
+          : ListView.builder(
+              itemBuilder: (ctx, i) {
+                return ManageProductBuilder(product: p.data[i]);
+              },
+              itemCount: p.data.length,
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(

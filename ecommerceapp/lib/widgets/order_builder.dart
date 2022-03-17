@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:ecommerceapp/models/products.dart';
 import 'package:flutter/material.dart';
 import '../models/order.dart';
+import 'package:provider/provider.dart';
 
 class OrderBuiler extends StatefulWidget {
   final Order order;
@@ -16,12 +17,13 @@ class _OrderBuilerState extends State<OrderBuiler> {
   bool expanded = false;
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
         shape: OutlineInputBorder(
             borderRadius: BorderRadius.circular(40),
-            borderSide:const BorderSide(color: Colors.white)),
+            borderSide: const BorderSide(color: Colors.white)),
         child: Column(children: [
           ListTile(
             title: Text(widget.order.total.toStringAsFixed(2)),
@@ -47,7 +49,7 @@ class _OrderBuilerState extends State<OrderBuiler> {
                       "${i + 1}",
                       style: const TextStyle(color: Colors.blue),
                     ),
-                    title: Text(Products()
+                    title: Text(Provider.of<Products>(context, listen: false)
                         .getProduct(widget.order.items[i].prodId)
                         .title),
                     subtitle:

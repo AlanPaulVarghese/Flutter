@@ -37,4 +37,32 @@ class Orders with ChangeNotifier {
     orders.add(Order(date: dateTime, id: id, items: items, total: total));
     notifyListeners();
   }
+
+  Future<void> loadData() async {
+    final url = Uri.parse(
+        "https://ecommerceapp1122-default-rtdb.firebaseio.com/oders.json");
+    final res = await http.get(url);
+    final conRes = json.decode(res.body);
+    final convertedData = Map<String, dynamic>.from(conRes);
+    convertedData.forEach((key, value) {
+      final temp = value['items'] as List<dynamic>;
+      final List<Cart> tempItems = [];
+      for (var element in temp) {
+        tempItems.add(Cart(
+            prodId: element['pid'],
+            id: element['id'],
+            qty: element['qty'],
+            total: element['total']));
+      }
+      orders.clear();
+      orders.add(Order(
+          date: DateTime.parse(value['date']),
+          id: key,
+          items: tempItems,
+          total: value['total']));
+      notifyListeners();
+    });
+  }
+
+
 }

@@ -28,6 +28,7 @@ class _DashState extends State<Dash> {
 
   @override
   Widget build(BuildContext context) {
+    final p = Provider.of<Products>(context);
     return isloading
         ? const Scaffold(
             body: Center(
@@ -88,7 +89,11 @@ class _DashState extends State<Dash> {
               ],
             ),
             drawer: const DrawerBuilder(),
-            body: ProductOverView(favStatus: favStaus),
+            body: p.data.isEmpty
+                ? const Center(
+                    child: Text("No Products To Display"),
+                  )
+                : ProductOverView(favStatus: favStaus),
           );
   }
 }
