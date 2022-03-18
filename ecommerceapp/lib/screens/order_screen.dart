@@ -9,7 +9,11 @@ class OrderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final p = Provider.of<Orders>(context);
-    return Scaffold(
+    return p.orders.isEmpty?const Scaffold(
+      body: Center(
+        child: Text("No Products To Display"),
+      )
+    ) :Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           elevation: 0,

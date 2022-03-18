@@ -44,7 +44,11 @@ class Orders with ChangeNotifier {
         "https://ecommerceapp1122-default-rtdb.firebaseio.com/oders.json");
     final res = await http.get(url);
     final conRes = json.decode(res.body);
+    if (conRes == null) {
+      return;
+    }
     final convertedData = Map<String, dynamic>.from(conRes);
+
     convertedData.forEach((key, value) {
       final temp = value['items'] as List<dynamic>;
       final List<Cart> tempItems = [];
@@ -55,7 +59,7 @@ class Orders with ChangeNotifier {
             qty: element['qty'],
             total: element['total']));
       }
-      
+
       orders.add(Order(
           date: DateTime.parse(value['date']),
           id: key,

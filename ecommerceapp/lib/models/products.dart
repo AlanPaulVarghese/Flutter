@@ -22,21 +22,20 @@ class Products with ChangeNotifier {
   }
 
   Future<void> addProduct(Product product) async {
-    final id = DateTime.now().toString();
+    // final id = DateTime.now().toString();
     final url = Uri.parse(
         "https://ecommerceapp1122-default-rtdb.firebaseio.com/products.json");
-    await http.post(url,
+    final res = await http.post(url,
         body: json.encode({
           'title': product.title,
           'price': product.price,
           'des': product.des,
           'isFav': product.isFav,
           'imgUrl': product.url,
-          'id': id
         }));
     Product newProduct = Product(
         des: product.des,
-        id: id,
+        id: json.decode(res.body)['name'],
         isFav: product.isFav,
         price: product.price,
         title: product.title,
@@ -46,7 +45,18 @@ class Products with ChangeNotifier {
     notifyListeners();
   }
 
-  void editProduct(Product product) {
+  Future<void> editProduct(Product product) async {
+    final url = Uri.parse(
+        "https://ecommerceapp1122-default-rtdb.firebaseio.com/products/${product.id}.json");
+    await http.patch(url,
+        body: json.encode({
+          'title': product.title,
+          'price': product.price,
+          'des': product.des,
+          'isFav': product.isFav,
+          'imgUrl': product.url,
+        }));
+    print("jiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
     final temp = _data.firstWhere((element) => element.id == product.id);
     _data.remove(temp);
     _data.add(product);
