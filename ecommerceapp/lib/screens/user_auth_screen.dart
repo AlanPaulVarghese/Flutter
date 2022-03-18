@@ -1,4 +1,7 @@
+import 'package:ecommerceapp/models/auth.dart';
+import 'package:ecommerceapp/models/httperror.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -9,6 +12,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   var loginState = true;
+  var isloading = false;
   late final TextEditingController email;
   late final TextEditingController pass;
   late final TextEditingController confirmPass;
@@ -122,40 +126,79 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 10,
               ),
-              SizedBox(
-                  height: 50,
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
-                    child: ElevatedButton(
-                        onPressed: () async {
-                          if (!formKey.currentState!.validate()) {
-                            return;
-                          }
-                          if (!loginState) {
-                            print('hiiiiiiiiii');
-                          }
+              if (isloading) const CircularProgressIndicator(),
+              if (!isloading)
+                Column(
+                  children: [
+                    SizedBox(
+                        height: 50,
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20, right: 20),
+                          child: ElevatedButton(
+                              onPressed: () async {
+                                if (!formKey.currentState!.validate()) {
+                                  return;
+                                }
+                                try {
+                                  if (!loginState) {
+                                    //reg
+                                    setState(() {
+                                      isloading = true;
+                                    });
+                                    await Provider.of<Auth>(context,
+                                            listen: false)
+                                        .reg(
+                                            userEmail: email.text,
+                                            password: pass.text);
+                                  }
+                                  setState(() {
+                                    isloading = true;
+                                  });
+
+                                  await Provider.of<Auth>(context,
+                                          listen: false)
+                                      .login(
+                                          userEmail: email.text,
+                                          password: pass.text);
+                                } on HttpError catch (e) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(e.mess)));
+                                } catch (e) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (ctx) => const AlertDialog(
+                                            content: Text("An error Ocurred!"),
+                                          ));
+                                } finally {
+                                  setState(() {
+                                    isloading = false;
+                                  });
+                                }
+                              },
+                              child: !loginState
+                                  ? const Text("create a new account")
+                                  : const Text("Login"),
+                              style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              )))),
+                        )),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          loginState = !loginState;
+                          setState(() {});
                         },
-                        child: !loginState
+                        child: loginState
                             ? const Text("create a new account")
-                            : const Text("Login"),
-                        style: ButtonStyle(
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        )))),
-                  )),
-              const SizedBox(
-                height: 5,
-              ),
-              TextButton(
-                  onPressed: () {
-                    loginState = !loginState;
-                    setState(() {});
-                  },
-                  child: loginState
-                      ? const Text("create a new account")
-                      : const Text("Login")),
+                            : const Text("Login")),
+                  ],
+                ),
               const SizedBox(
                 height: 100,
               )
