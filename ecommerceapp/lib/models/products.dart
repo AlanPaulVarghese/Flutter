@@ -56,14 +56,20 @@ class Products with ChangeNotifier {
           'isFav': product.isFav,
           'imgUrl': product.url,
         }));
-    print("jiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
     final temp = _data.firstWhere((element) => element.id == product.id);
     _data.remove(temp);
     _data.add(product);
     notifyListeners();
   }
 
-  void remove(Product product) {
+  Future remove(Product product) async {
+    try {
+      final url = Uri.parse(
+          "https://ecommerceapp1122-default-rtdb.firebaseio.com/products/${product.id}.json");
+      await http.delete(url);
+    } catch (e) {
+      return;
+    }
     _data.remove(product);
     notifyListeners();
   }
