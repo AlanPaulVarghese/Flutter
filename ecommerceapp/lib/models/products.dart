@@ -61,26 +61,28 @@ class Products with ChangeNotifier {
   Future<void> loadData() async {
     final url = Uri.parse(
         "https://ecommerceapp1122-default-rtdb.firebaseio.com/products.json");
-    final res = await http.get(url);
-    final conRes = json.decode(res.body);
-    if (conRes == null) {
-      return;
-    } else {
-      final convertedData = Map<String, dynamic>.from(conRes);
-      convertedData.forEach((key, value) {
-        _data.add(Product(
-            des: value['des'],
-            id: key,
-            isFav: value['isFav'],
-            price: value['price'],
-            title: value['title'],
-            url: value['imgUrl']));
-      });
-      notifyListeners();
+    try {
+      final res = await http.get(url);
+      final conRes = json.decode(res.body);
+      if (conRes == null) {
+        return;
+      } else {
+        final convertedData = Map<String, dynamic>.from(conRes);
+        convertedData.forEach((key, value) {
+          _data.add(Product(
+              des: value['des'],
+              id: key,
+              isFav: value['isFav'],
+              price: value['price'],
+              title: value['title'],
+              url: value['imgUrl']));
+        });
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 
-  
   Product getProduct(String id) {
     final p = _data.firstWhere((element) => element.id == id);
     return p;

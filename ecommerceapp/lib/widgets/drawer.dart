@@ -1,7 +1,10 @@
+import 'package:ecommerceapp/models/order.dart';
 import 'package:ecommerceapp/screens/dash.dart';
 import 'package:ecommerceapp/screens/manage_products.dart';
 import 'package:ecommerceapp/screens/order_screen.dart';
+import 'package:ecommerceapp/widgets/dataloader.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DrawerBuilder extends StatelessWidget {
   const DrawerBuilder({Key? key}) : super(key: key);
@@ -49,8 +52,10 @@ class DrawerBuilder extends StatelessWidget {
             onTap: () {
               Navigator.of(context).pop();
 
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (ctx) => const OrderScreen()));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (ctx) => DataLoader(
+                      future: Provider.of<Orders>(context).loadData(),
+                      child: const OrderScreen())));
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),

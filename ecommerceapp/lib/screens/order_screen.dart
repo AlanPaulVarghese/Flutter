@@ -4,20 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/order.dart';
 
-class OrderScreen extends StatefulWidget {
+class OrderScreen extends StatelessWidget {
   const OrderScreen({Key? key}) : super(key: key);
-
-  @override
-  State<OrderScreen> createState() => _OrderScreenState();
-}
-
-class _OrderScreenState extends State<OrderScreen> {
-  @override
-  void initState() {
-    Provider.of<Orders>(context, listen: false).loadData();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     final p = Provider.of<Orders>(context);
