@@ -128,7 +128,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: ElevatedButton(
-                        onPressed: () async {},
+                        onPressed: () async {
+                          if (!formKey.currentState!.validate()) {
+                            return;
+                          }
+                          if (!loginState) {
+                            print('hiiiiiiiiii');
+                          }
+                        },
                         child: !loginState
                             ? const Text("create a new account")
                             : const Text("Login"),
