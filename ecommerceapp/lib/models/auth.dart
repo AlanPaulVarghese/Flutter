@@ -10,6 +10,15 @@ class Auth with ChangeNotifier {
 
   // Auth({required this.expiry, required this.token, required this.userid});
 
+  bool get isAuth => getToken != null;
+
+  String? get getToken {
+    if (token != null && expiry != null && expiry!.isAfter(DateTime.now())) {
+      return token;
+    }
+    return null;
+  }
+
   Future<void> login(
       {required String userEmail, required String password}) async {
     const apikey = "AIzaSyBeFUxL0wsC56WIKI4NCmGz2aSI5LgS4x8";
@@ -22,10 +31,15 @@ class Auth with ChangeNotifier {
             'password': password,
             'returnSecureToken': true
           }));
-
-      if (json.decode(res.body)['error'] != null) {
-        throw HttpError(json.decode(res.body)['error']['message']);
+      final data = json.decode(res.body);
+      if (data['error'] != null) {
+        throw HttpError(data['error']['message']);
       }
+      token = data['idToken'];
+      userid = data['localId'];
+      expiry =
+          DateTime.now().add(Duration(seconds: int.parse(data['expiresIn'])));
+      notifyListeners();
     } catch (e) {
       rethrow;
     }
@@ -46,6 +60,11 @@ class Auth with ChangeNotifier {
       if (json.decode(res.body)['error'] != null) {
         throw HttpError(json.decode(res.body)['error']['message']);
       }
+      final data = json.decode(res.body);
+      token = data['idToken'];
+      userid = data['localId'];
+      expiry = DateTime.now().add(Duration(seconds: data['expiresIn']));
+      notifyListeners();
     } catch (e) {
       rethrow;
     }

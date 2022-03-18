@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
-      ChangeNotifierProvider(create: (ctx)=>Auth()),
+      ChangeNotifierProvider(create: (ctx) => Auth()),
       ChangeNotifierProvider(
         create: (ctx) => Products(),
       ),
@@ -31,20 +31,19 @@ class MaterialAppHolder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: LoginScreen()
-    );
+    return Consumer<Auth>(
+        builder: (ctx, auth, _) => MaterialApp(
+            debugShowCheckedModeBanner: false, home:auth.isAuth?DataLoader(
+        future: Provider.of<Products>(context, listen: false).loadData(),
+        child:const Dash(),
+      ): const LoginScreen()));
   }
 }
 
 /*
 
 
-DataLoader(
-        future: Provider.of<Products>(context, listen: false).loadData(),
-        child:const Dash(),
-      ),
+
 
 
 */
