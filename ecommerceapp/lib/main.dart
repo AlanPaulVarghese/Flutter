@@ -1,6 +1,7 @@
 import 'package:ecommerceapp/models/order.dart';
 import 'package:ecommerceapp/models/products.dart';
 import 'package:ecommerceapp/screens/dash.dart';
+import 'package:ecommerceapp/screens/user_auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './widgets/dataloader.dart';
@@ -30,10 +31,18 @@ class MaterialAppHolder extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: DataLoader(
-        future: Provider.of<Products>(context, listen: false).loadData(),
-        child:const Dash(),
-      ),
+      home: LoginScreen()
     );
   }
 }
+
+/*
+
+
+DataLoader(
+        future: Provider.of<Products>(context, listen: false).loadData(),
+        child:const Dash(),
+      ),
+
+
+*/
